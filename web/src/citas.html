@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="container max-width-md mx-auto p-4 sm:p-5 md:p-6 bg-light rounded shadow-lg">
+        <div class="space-y-4">
+          <div class="text-center">
+            <h1 class="h4 font-weight-bold">Reservar una Cita</h1>
+            <p class="text-muted">Complete el formulario a continuación para programar su cita.</p>
+          </div>
+          <form class="space-y-4">
+            <div class="form-group">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="name" placeholder="Ingrese su nombre">
+            </div>
+            <div class="form-group">
+              <label for="barber" class="form-label">Barbero Disponible</label>
+              <select class="form-control" id="barber">
+                <option value="">Seleccione un barbero</option>
+                <option value="john">John</option>
+                <option value="sarah">Sarah</option>
+                <option value="michael">Michael</option>
+                <option value="emily">Emily</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="date" class="form-label">Fecha de la Cita</label>
+              <input type="date" class="form-control" id="date">
+            </div>
+            <div class="form-group">
+              <label for="time" class="form-label">Hora de la Cita</label>
+              <select class="form-control" id="time">
+                <option value="">Seleccione una hora</option>
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="3:00 PM">3:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+                <option value="5:00 PM">5:00 PM</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="comment" class="form-label">Comentario</label>
+              <textarea class="form-control" id="comment" rows="3" placeholder="Ingrese un comentario"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+</body>
+</html>
