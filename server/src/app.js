@@ -22,7 +22,7 @@ app.get('/user', (req, res) => {
 });
 
 
-// Routese
+// Route
 app.use("/",routes)
 
 
