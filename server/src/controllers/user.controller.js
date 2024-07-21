@@ -1,8 +1,24 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { userModel } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
+import { Router } from 'express';
 
-const register = async (req, res) => {
+export const usersRouter = Router();
+
+const users = async (req, res) => {
+    try {
+        const users = await User.findAll();
+        return res.json(users);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Error interno del servidor'
+        })
+    }
+}
+
+const register = async (req, res) => { 
     try {
         const {username, password} = req.body;
 
@@ -14,7 +30,8 @@ const register = async (req, res) => {
         }
 
         //Encontrar el usuario para saber si existe e indicar que ya es existente
-        const user = await userModel.findOneByUsername(username);
+        const user = await User.findOne(({ where: { username: username } }))
+
         if (user) {
             return res.status(409).json({ok: true, message:'User already exists'});
         }
@@ -26,7 +43,7 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // 2. Se crea el usuario con la contrase;a hasheada
-        const newUser = await userModel.create(username, hashedPassword);
+        const newUser = await User.create({ username: username, password: hashedPassword });
 
         // 3. Luego se crea el token que es de orden publico
         // Por eso la clave secreta se hace en .env
@@ -53,15 +70,15 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const {username, password} = req.body;
-
+        const { username, password } = req.body;
+        console.log(req.body);
         if(!username || !password){
             return res
                     .status(400)
                     .json({ok: false, message: 'Username or password missed'});
         }
 
-        const user = await userModel.findOneByUsername(username);
+        const user = await User.findOne(({ where: { username: username } }))
         if (!user) {
             return res
                     .status(409)
@@ -101,7 +118,7 @@ const login = async (req, res) => {
 const profile = async(req, res) => {
     try {
 
-        const user = await userModel.findOneByUsername(req.username);
+        const user = await User.findOne(({ where: { username: req.username } }))
         
         return res.json({ok: true, message: user});
 
@@ -114,9 +131,10 @@ const profile = async(req, res) => {
     }
 }
 export const userController = {
+    users,
     register,
     login,
-    profile,
+    profile
 }
 
 // Funcion que se ejecute antes de una funcion, los middlewares
