@@ -23,7 +23,7 @@ app.get('/user', (req, res) => {
 
 
 // Routes
-app.use(routes)
+app.use("/",routes)
 
 
 app.listen(3000, () => { console.log('Server listening on port ' + PORT) })
