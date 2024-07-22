@@ -1,0 +1,227 @@
+<section>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <div class="d-flex flex-column min-vh-100">
+        <header class="sticky-top bg-white border-bottom">
+            <nav aria-label="breadcrumb" class="container">
+                <ol class="breadcrumb my-2">
+                    <li class="breadcrumb-item"><a href="index.handlebars">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Permisos, Roles y Usuarios</li>
+                </ol>
+            </nav>
+        </header>
+        <main class="flex-grow-1 container my-4">
+            <div class="row g-4">
+                <!-- Formularios y Tablas de Permisos y Roles -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">Mantenimiento de Permisos</h3>
+                            <p class="card-text">Gestiona la información de los permisos</p>
+                            <form class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="id_permiso" class="form-label">ID Permiso</label>
+                                    <input type="number" class="form-control" id="id_permiso">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nombre_permiso" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_permiso">
+                                </div>
+                                <div class="col-12">
+                                    <label for="descripcion_permiso" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="descripcion_permiso">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Permiso</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each permisos}}
+                                    <tr class="clickable-row" 
+                                        data-id_permiso="{{this.id_permiso}}" 
+                                        data-nombre="{{this.nombre}}" 
+                                        data-descripcion="{{this.descripcion}}">
+                                        <td>{{this.id_permiso}}</td>
+                                        <td>{{this.nombre}}</td>
+                                        <td>{{this.descripcion}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">Mantenimiento de Roles</h3>
+                            <p class="card-text">Gestiona la información de los roles</p>
+                            <form class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="id_rol" class="form-label">ID Rol</label>
+                                    <input type="number" class="form-control" id="id_rol">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nombre_rol" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_rol">
+                                </div>
+                                <div class="col-12">
+                                    <label for="descripcion_rol" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="descripcion_rol">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Rol</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each roles}}
+                                    <tr class="clickable-row" 
+                                        data-id_rol="{{this.id_rol}}" 
+                                        data-nombre="{{this.nombre}}" 
+                                        data-descripcion="{{this.descripcion}}">
+                                        <td>{{this.id_rol}}</td>
+                                        <td>{{this.nombre}}</td>
+                                        <td>{{this.descripcion}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Formulario y Tabla de Usuarios -->
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">Mantenimiento de Usuarios</h3>
+                            <p class="card-text">Gestiona la información de los usuarios</p>
+                            <form class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="id_usuario" class="form-label">ID Usuario</label>
+                                    <input type="number" class="form-control" id="id_usuario">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_tercero_usuario" class="form-label">ID Tercero</label>
+                                    <input type="number" class="form-control" id="id_tercero_usuario">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_rol_usuario" class="form-label">Rol</label>
+                                    <select class="form-control" id="id_rol_usuario">
+                                        {{#each roles}}
+                                        <option value="{{this.id_rol}}">{{this.nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clave" class="form-label">Clave</label>
+                                    <input type="password" class="form-control" id="clave">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email_usuario" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email_usuario">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fecha_registro_usuario" class="form-label">Fecha de Registro</label>
+                                    <input type="date" class="form-control" id="fecha_registro_usuario">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Usuario</th>
+                                        <th>ID Tercero</th>
+                                        <th>Rol</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Fecha de Registro</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each usuarios}}
+                                    <tr class="clickable-row" 
+                                        data-id_usuario="{{this.id_usuario}}" 
+                                        data-id_tercero="{{this.id_tercero}}" 
+                                        data-id_rol="{{this.id_rol}}" 
+                                        data-username="{{this.username}}" 
+                                        data-email="{{this.email}}" 
+                                        data-fecha_registro="{{this.fecha_registro}}">
+                                        <td>{{this.id_usuario}}</td>
+                                        <td>{{this.id_tercero}}</td>
+                                        <td>{{this.id_rol}}</td>
+                                        <td>{{this.username}}</td>
+                                        <td>{{this.email}}</td>
+                                        <td>{{this.fecha_registro}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const rows = document.querySelectorAll('.clickable-row');
+                                rows.forEach(row => {
+                                    row.addEventListener('click', function () {
+                                        // Permisos
+                                        const id_permiso = this.getAttribute('data-id_permiso');
+                                        const nombre_permiso = this.getAttribute('data-nombre_permiso');
+                                        const descripcion_permiso = this.getAttribute('data-descripcion_permiso');
+                                        document.getElementById('id_permiso').value = id_permiso;
+                                        document.getElementById('nombre_permiso').value = nombre_permiso;
+                                        document.getElementById('descripcion_permiso').value = descripcion_permiso;
+
+                                        // Roles
+                                        const id_rol = this.getAttribute('data-id_rol');
+                                        const nombre_rol = this.getAttribute('data-nombre_rol');
+                                        const descripcion_rol = this.getAttribute('data-descripcion_rol');
+                                        document.getElementById('id_rol').value = id_rol;
+                                        document.getElementById('nombre_rol').value = nombre_rol;
+                                        document.getElementById('descripcion_rol').value = descripcion_rol;
+
+                                        // Usuarios
+                                        const id_usuario = this.getAttribute('data-id_usuario');
+                                        const id_tercero = this.getAttribute('data-id_tercero');
+                                        const id_rol_usuario = this.getAttribute('data-id_rol');
+                                        const username = this.getAttribute('data-username');
+                                        const email_usuario = this.getAttribute('data-email');
+                                        const fecha_registro_usuario = this.getAttribute('data-fecha_registro');
+                                        document.getElementById('id_usuario').value = id_usuario;
+                                        document.getElementById('id_tercero_usuario').value = id_tercero;
+                                        document.getElementById('id_rol_usuario').value = id_rol_usuario;
+                                        document.getElementById('username').value = username;
+                                        document.getElementById('email_usuario').value = email_usuario;
+                                        document.getElementById('fecha_registro_usuario').value = fecha_registro_usuario;
+                                    });
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
