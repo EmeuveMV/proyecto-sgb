@@ -1,5 +1,5 @@
 <section>
-  
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <div class="d-flex flex-column min-vh-100">
         <header class="sticky-top bg-white border-bottom">
@@ -18,7 +18,7 @@
                             <h3 class="card-title">Mantenimiento de Terceros</h3>
                             <p class="card-text">Gestiona la información de los terceros</p>
                             <form class="row g-3">
-                                
+
                                 <div class="col-md-6">
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre">
@@ -45,31 +45,57 @@
                 </div>
                 <div class="col-12">
                     <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Listado de personas</h3>
-                            <p class="card-text">Todos las personas registradas</p>
-                            <div class="table-responsive">
-                                <h1>Lista de Usuarios</h1>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Email</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each users}}
-                                        <tr>
-                                            <td>{{this.id}}</td>
-                                            <td>{{this.name}}</td>
-                                            <td>{{this.email}}</td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                       <div class="container my-4">
+    <h1>Lista de Usuarios</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Fecha de Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr class="clickable-row" 
+                data-id="{{this.id}}" 
+                data-nombre="{{this.nombre}}" 
+                data-apellido="{{this.apellido}}" 
+                data-telefono="{{this.telefono}}" 
+                data-fecha_nacimiento="{{this.fecha_nacimiento}}">
+                <td>{{this.nombre}}</td>
+                <td>{{this.apellido}}</td>
+                <td>{{this.telefono}}</td>
+                <td>{{this.fecha_nacimiento}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('.clickable-row');
+
+        rows.forEach(row => {
+            row.addEventListener('click', function () {
+                const nombre = this.getAttribute('data-nombre');
+                const apellido = this.getAttribute('data-apellido');
+                const telefono = this.getAttribute('data-telefono');
+                const fecha_nacimiento = this.getAttribute('data-fecha_nacimiento');
+
+                document.getElementById('nombre').value = nombre;
+                document.getElementById('apellido').value = apellido;
+                document.getElementById('telefono').value = telefono;
+                document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
+            });
+        });
+    });
+</script>
+
+
+
                     </div>
                 </div>
             </div>
@@ -77,4 +103,3 @@
     </div>
 
 </section>
-  
