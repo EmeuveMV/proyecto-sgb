@@ -122,8 +122,12 @@
                                     <input type="number" class="form-control" id="id_tercero_usuario">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="id_rol_usuario" class="form-label">ID Rol</label>
-                                    <input type="number" class="form-control" id="id_rol_usuario">
+                                    <label for="id_rol_usuario" class="form-label">Rol</label>
+                                    <select class="form-control" id="id_rol_usuario">
+                                        {{#each roles}}
+                                        <option value="{{this.id_rol}}">{{this.nombre}}</option>
+                                        {{/each}}
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="username" class="form-label">Username</label>
@@ -151,7 +155,7 @@
                                     <tr>
                                         <th>ID Usuario</th>
                                         <th>ID Tercero</th>
-                                        <th>ID Rol</th>
+                                        <th>Rol</th>
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th>Fecha de Registro</th>
@@ -201,10 +205,10 @@
                                         // Usuarios
                                         const id_usuario = this.getAttribute('data-id_usuario');
                                         const id_tercero = this.getAttribute('data-id_tercero');
-                                        const id_rol_usuario = this.getAttribute('data-id_rol_usuario');
+                                        const id_rol_usuario = this.getAttribute('data-id_rol');
                                         const username = this.getAttribute('data-username');
-                                        const email_usuario = this.getAttribute('data-email_usuario');
-                                        const fecha_registro_usuario = this.getAttribute('data-fecha_registro_usuario');
+                                        const email_usuario = this.getAttribute('data-email');
+                                        const fecha_registro_usuario = this.getAttribute('data-fecha_registro');
                                         document.getElementById('id_usuario').value = id_usuario;
                                         document.getElementById('id_tercero_usuario').value = id_tercero;
                                         document.getElementById('id_rol_usuario').value = id_rol_usuario;
