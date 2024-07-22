@@ -1,9 +1,54 @@
 <section>
-    <form action="/login" method="POST">
-        <label for="">Usuario: </label>
-        <input type="text" name="username" id="username">
-        <label for="">Clave: </label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Aceptar</button>
-    </form>
-</section>
+     <section class="vh-100" style="background-color: rgb(250, 248, 249);">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="/fotos/esta.jpg" alt="login form" width="430" height="720"
+                  style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+
+                  <form id="loginform" action="/login" method="POST">
+
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <span class="h1 fw-bold mb-3 "><img src="/fotos/logo.jpg" alt="" style="margin-left: 20px;"
+                          width="400" height="150"></span>
+                    </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; margin-left: 100px;">Inicia sesion con
+                      tu cuenta</h5>
+
+                    <div data-mdb-input-init class="form-outline mb-4 " style="width: 460px;">
+                      <input type="email"  name="email" class="form-control form-control-lg"
+                        placeholder="Correo Eletronico" />
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="password" name="password" class="form-control form-control-lg"
+                        placeholder="Contraseña" />
+                    </div>
+
+                    <div class="pt-1 mb-4">
+                      <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block"
+                        type="submit">Iniciar</button>
+                    </div>
+                    <div class="pt-1 mb-4" style="margin-left: 120px;">
+                      <p class="mb-5 pb-lg-2" style="color: #393f81;">No tienes una cuenta? <a href="#!"
+                          style="color: #393f81;">Registrate</a></p>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
