@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { userController } from '../controllers/user.controller.js';
 import { verifyToken } from '../middlewares/jwt.middleware.js';
 import { User } from '../models/user.model.js';
+import { terceroController } from '../controllers/tercero.controller.js';
+import {employeeController} from '../controllers/employee.controller.js'
 
 
 const router = Router(); 
@@ -16,29 +18,26 @@ router.post('/register', userController.register);
 
 router.get('/', (req, res) => { res.json({ message: 'Conexion hecha desde el Home Page en archivo de rutas' }) })
 
-// // TODO hacer lo relacionado con el manejo de errores try catch y routehelper
-
 /* Login */
 router.get('/login', (req, res) => {
     res.render('../views/login')
 });
 
-// router.post('/login', (req, res) => {
-//     console.log(req.body);
-//     const {username, password} = req.body;
-//     console.log(`Username: ${username} and Password: ${password}`);
-//     return;
-// });
-
 router.post('/login', userController.login);
+
+// Citas
+
+router.get('/citas', (req, res) => {
+  res.json({ message: 'Aqui apareceran todas las citas' })  
+})
+
+router.get('/barberos', employeeController.barberos);
 
 router.get('/users', async (req, res) => {
     const users = await User.findOne({ where: { username: 'vlad' }})
     console.log(users.dataValues.username);
     res.render('../views/user', { name: users.dataValues.username })
 })
-
-
 
 router.get('/profile', verifyToken, userController.profile); // Ruta protegida.
 
@@ -51,5 +50,9 @@ router.post('/user', (req, res) => { res.json({ message: 'Se guardaria el usuari
 
 router.get('/about', (req, res) => { res.json({ message: 'Conexion hecha desde el Home Page' }) })
 
+// Mantenimientos
+router.get('/mant-tercero', terceroController.obtenerDatosTerceros);
+
+router.get('/mant-tercero:id');
 
 export default router;

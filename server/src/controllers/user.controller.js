@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken';
 import { User } from "../models/user.model.js";
 import { Router } from 'express';
 
-export const usersRouter = Router();
-
 const users = async (req, res) => {
     try {
         const users = await User.findAll();
