@@ -1,0 +1,80 @@
+<section>
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <div class="d-flex flex-column min-vh-100">
+        <header class="sticky-top bg-white border-bottom">
+            <nav aria-label="breadcrumb" class="container">
+                <ol class="breadcrumb my-2">
+                    <li class="breadcrumb-item"><a href="index.handlebars">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Terceros</li>
+                </ol>
+            </nav>
+        </header>
+        <main class="flex-grow-1 container my-4">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">Mantenimiento de Terceros</h3>
+                            <p class="card-text">Gestiona la información de los terceros</p>
+                            <form class="row g-3">
+                                
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="apellido">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="number" class="form-control" id="telefono">
+                                </div>
+                                <div class="col-12">
+                                    <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="fecha_nacimiento">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;;">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">Listado de personas</h3>
+                            <p class="card-text">Todos las personas registradas</p>
+                            <div class="table-responsive">
+                                <h1>Lista de Usuarios</h1>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each users}}
+                                        <tr>
+                                            <td>{{this.id}}</td>
+                                            <td>{{this.name}}</td>
+                                            <td>{{this.email}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</section>
+  
