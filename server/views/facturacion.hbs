@@ -1,0 +1,145 @@
+ <div class="container mt-5">
+        <div id="lista-facturas">
+            <h1 class="mb-4">Lista de Facturas</h1>
+            <div class="mb-3">
+                <input type="text" id="search" class="form-control" placeholder="Buscar factura...">
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID Factura</th>
+                        <th>ID Cliente</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Método de Pago</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="facturas-list">
+                    <!--poner la lista  -->
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="mostrarFormulario()">Agregar Factura</button>
+        </div>
+
+        <div id="formulario-factura" style="display: none;">
+            <h1 class="mb-4">Agregar/Editar Factura</h1>
+            <form id="factura-form">
+                <div class="form-group">
+                    <label for="idCliente">ID Cliente</label>
+                    <input type="number" class="form-control" name="id_cliente" id="idCliente" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaFactura">Fecha de Factura</label>
+                    <input type="date" class="form-control" name="fecha_factura" id="fechaFactura" required>
+                </div>
+                <div class="form-group">
+                    <label for="metodoPago">Método de Pago</label>
+                    <input type="text" class="form-control" name="metodo_pago" id="metodoPago" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" id="estado" required>
+                </div>
+                <h2>Detalles de Factura</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID Producto/Servicio</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detalles-list">
+                        <!-- Aquí se insertarán los detalles dinámicamente -->
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-secondary" onclick="agregarDetalle()">Agregar Detalle</button>
+                <button type="submit" class="btn btn-primary">Guardar Factura</button>
+                <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        function mostrarFormulario() {
+            $('#lista-facturas').hide();
+            $('#formulario-factura').show();
+        }
+
+        function ocultarFormulario() {
+            $('#formulario-factura').hide();
+            $('#lista-facturas').show();
+        }
+
+        function agregarDetalle() {
+            let nuevoDetalle = `
+                <tr>
+                    <td><input type="number" class="form-control" required></td>
+                    <td><input type="number" class="form-control" required></td>
+                    <td><input type="number" class="form-control" required></td>
+                    <td><input type="number" class="form-control" readonly></td>
+                    <td><button type="button" class="btn btn-danger" onclick="eliminarDetalle(this)">Eliminar</button></td>
+                </tr>`;
+            $('#detalles-list').append(nuevoDetalle);
+        }
+
+        function eliminarDetalle(button) {
+            $(button).closest('tr').remove();
+        }
+
+        function cargarFacturas() {
+            $.ajax({
+                url: 'http://localhost:3000/api/facturas',
+                method: 'GET',
+                success: function(data) {
+                    let facturasList = $('#facturas-list');
+                    facturasList.empty();
+                    data.data.forEach(factura => {
+                        facturasList.append(`
+                            <tr>
+                                <td>${factura.id_factura}</td>
+                                <td>${factura.id_cliente}</td>
+                                <td>${factura.fecha_factura}</td>
+                                <td>${factura.total}</td>
+                                <td>${factura.metodo_pago}</td>
+                                <td>${factura.estado}</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="editarFactura(${factura.id_factura})">Editar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarFactura(${factura.id_factura})">Eliminar</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function(error) {
+                    console.error('Error al cargar las facturas:', error);
+                }
+            });
+        }
+
+        function editarFactura(idFactura) {
+            // Aquí puedes agregar la lógica para cargar los datos de la factura en el formulario
+            mostrarFormulario();
+        }
+
+        function eliminarFactura(idFactura) {
+            // Lógica para eliminar la factura
+        }
+
+        $('#factura-form').on('submit', function(event) {
+            event.preventDefault();
+            // Lógica para guardar la factura en la base de datos
+            ocultarFormulario();
+            cargarFacturas();
+        });
+
+        $(document).ready(function() {
+            cargarFacturas();
+        });
+    </script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
