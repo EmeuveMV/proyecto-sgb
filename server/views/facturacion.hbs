@@ -1,4 +1,6 @@
- <div class="container mt-5">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <div class="container mt-5">
         <div id="lista-facturas">
             <h1 class="mb-4">Lista de Facturas</h1>
             <div class="mb-3">
@@ -17,7 +19,20 @@
                     </tr>
                 </thead>
                 <tbody id="facturas-list">
-                    <!--poner la lista  -->
+                 {{#each facturas}}
+                      <tr>
+                          <td>{{this.id_factura}}</td>
+                          <td>{{this.id_cliente}}</td>
+                          <td>{{this.fecha_factura}}</td>
+                          <td>{{this.total}}</td>
+                          <td>{{this.metodo_pago}}</td>
+                          <td>{{this.estado}}</td>
+                          <td>
+                              <button class="btn btn-secondary btn-sm" onclick="editarFactura({{this.id_factura}})">Editar</button>
+                              <button class="btn btn-danger btn-sm" onclick="eliminarFactura({{this.id_factura}})">Eliminar</button>
+                          </td>
+                      </tr>
+                   {{/each}}
                 </tbody>
             </table>
             <button class="btn btn-primary" onclick="mostrarFormulario()">Agregar Factura</button>
@@ -25,42 +40,44 @@
 
         <div id="formulario-factura" style="display: none;">
             <h1 class="mb-4">Agregar/Editar Factura</h1>
-            <form id="factura-form">
-                <div class="form-group">
-                    <label for="idCliente">ID Cliente</label>
-                    <input type="number" class="form-control" name="id_cliente" id="idCliente" required>
-                </div>
-                <div class="form-group">
-                    <label for="fechaFactura">Fecha de Factura</label>
-                    <input type="date" class="form-control" name="fecha_factura" id="fechaFactura" required>
-                </div>
-                <div class="form-group">
-                    <label for="metodoPago">Método de Pago</label>
-                    <input type="text" class="form-control" name="metodo_pago" id="metodoPago" required>
-                </div>
-                <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" id="estado" required>
-                </div>
-                <h2>Detalles de Factura</h2>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID Producto/Servicio</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Subtotal</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detalles-list">
-                        <!--lista -->
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-secondary" onclick="agregarDetalle()">Agregar Detalle</button>
-                <button type="submit" class="btn btn-primary">Guardar Factura</button>
-                <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cancelar</button>
-            </form>
+         <form id="factura-form" action="/facturas" method="post">
+    <div class="form-group">
+        <label for="idCliente">ID Cliente</label>
+        <input type="number" class="form-control" id="idCliente" name="id_cliente" required>
+    </div>
+    <div class="form-group">
+        <label for="fechaFactura">Fecha de Factura</label>
+        <input type="date" class="form-control" id="fechaFactura" name="fecha_factura" required>
+    </div>
+    <div class="form-group">
+        <label for="metodoPago">Método de Pago</label>
+        <input type="text" class="form-control" id="metodoPago" name="metodo_pago" required>
+    </div>
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" class="form-control" id="estado" name="estado" required>
+    </div>
+    <input type="hidden" name="total" id="total" value="0"> <!-- Campo oculto para el total -->
+    <h2>Detalles de Factura</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID Producto/Servicio</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="detalles-list">
+            <!-- Aquí se insertarán los detalles dinámicamente -->
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" onclick="agregarDetalle()">Agregar Detalle</button>
+    <button type="submit" class="btn btn-primary">Guardar Factura</button>
+    <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">Cancelar</button>
+</form>
+
         </div>
     </div>
 
@@ -94,7 +111,7 @@
 
         function cargarFacturas() {
             $.ajax({
-                url: 'http://localhost:3000/api/facturas',
+                url: 'http://localhost:3000/facturas',
                 method: 'GET',
                 success: function(data) {
                     let facturasList = $('#facturas-list');
@@ -142,4 +159,4 @@
             cargarFacturas();
         });
     </script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
