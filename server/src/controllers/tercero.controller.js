@@ -9,14 +9,15 @@ const obtenerDatosTerceros = async (req, res) => {
             res.status(404).json('No se encontraron datos');
             return;
           }
-        console.log(terceros);
-        return res.render('../views/mant-tercero',{terceros:{
-            name: terceros.dataValues.name,
-           lastname: terceros.dataValues.lastname,
-           phone: terceros.dataValues.phone,
-             email: terceros.dataValues.email,
-           birth: terceros.dataValues.birth,
-        }})
+
+          let name = terceros.map(terceros => ({name: terceros.name})); 
+          console.log(name);
+          let lastname = terceros.map(terceros => ({lastname: terceros.lastname})); 
+          console.log(lastname);
+
+        return res.render('../views/mantenimientos/mant-tercero', {name: terceros.name, 
+            lastname: terceros.lastname,
+        })
     } catch (error) {
         console.log(error);
         return res.status(500).json({

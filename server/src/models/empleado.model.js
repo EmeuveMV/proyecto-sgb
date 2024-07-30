@@ -32,4 +32,7 @@ export const Employee = sequelize.define('empleados',{
   }
   });
 
-  Employee.belongsTo(Tercero, { foreignKey: 'id_tercero' }, Cargo, { foreignKey: 'id_cargo' }); // Un empleado pertenece a un tercero y a un cargo
+  Employee.belongsTo(Tercero, { foreignKey: 'id_tercero' }, 
+                      Cargo, { foreignKey: 'id_cargo' }); // Un empleado pertenece a un tercero y a un cargo
+  Tercero.hasMany(Employee, { foreignKey: 'id_tercero' });
+  Cargo.hasMany(Employee, { foreignKey: 'id_cargo' }); // Un cargo tiene muchos empleados

@@ -4,6 +4,7 @@ import { verifyToken } from '../middlewares/jwt.middleware.js';
 import { User } from '../models/user.model.js';
 import { terceroController } from '../controllers/tercero.controller.js';
 import {employeeController} from '../controllers/employee.controller.js'
+import {citaController} from '../controllers/cita.controller.js'
 
 
 const router = Router(); 
@@ -18,6 +19,11 @@ router.post('/register', userController.register);
 
 router.get('/', (req, res) => { res.json({ message: 'Conexion hecha desde el Home Page en archivo de rutas' }) })
 
+// Index
+router.get('/index', (req, res) => {
+    res.render('../views/index')
+});
+
 /* Login */
 router.get('/login', (req, res) => {
     res.render('../views/login')
@@ -26,12 +32,14 @@ router.get('/login', (req, res) => {
 router.post('/login', userController.login);
 
 // Citas
+router.get('/citas', citaController.barberos);
+router.post('/citas', citaController.register);
 
-router.get('/citas', (req, res) => {
-  res.json({ message: 'Aqui apareceran todas las citas' })  
-})
 
-router.get('/barberos', employeeController.barberos);
+
+// router.get('/citas', (req, res) => {
+//     res.render('../views/citas')
+// })
 
 router.get('/users', async (req, res) => {
     const users = await User.findOne({ where: { username: 'vlad' }})
