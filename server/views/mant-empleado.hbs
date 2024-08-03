@@ -1,6 +1,7 @@
 <section>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <div class="d-flex flex-column min-vh-100">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+     <div class="d-flex flex-column min-vh-100">
         <header class="sticky-top bg-white border-bottom">
             <nav aria-label="breadcrumb" class="container">
                 <ol class="breadcrumb my-2">
@@ -16,42 +17,43 @@
                         <div class="card-body">
                             <h3 class="card-title">Mantenimiento de Empleados</h3>
                             <p class="card-text">Gestiona la información de los empleados</p>
-                            <form class="row g-3"  action="/mant-empleado" method="POST">
+                            <form id="empleados-form" class="row g-3" action="/mant-empleado" method="POST">
                                 <div class="col-md-6">
                                     <label for="id_empleado" class="form-label">ID Empleado</label>
-                                    <input type="number" class="form-control" id="id_empleado">
+                                    <input type="number" class="form-control" id="id_empleado" name="id_empleado">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="id_cargo" class="form-label">ID Cargo</label>
-                                    <input type="number" class="form-control" id="id_cargo">
+                                    <input type="number" class="form-control" id="id_cargo" name="id_cargo">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="id_tercero" class="form-label">ID Tercero</label>
-                                    <input type="number" class="form-control" id="id_tercero">
+                                    <input type="number" class="form-control" id="id_tercero" name="id_tercero">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <input type="email" class="form-control" id="email" name="email">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="fecha_contratacion" class="form-label">Fecha de Contratación</label>
-                                    <input type="date" class="form-control" id="fecha_contratacion">
+                                    <input type="date" class="form-control" id="fecha_contratacion" name="fecha_contratacion">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="direccion" class="form-label">Dirección</label>
-                                    <input type="text" class="form-control" id="direccion">
+                                    <input type="text" class="form-control" id="direccion" name="direccion">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" id="fecha_nacimiento">
+                                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="genero" class="form-label">Género</label>
-                                    <input type="text" class="form-control" id="genero">
+                                    <input type="text" class="form-control" id="genero" name="genero">
                                 </div>
                                 <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
                                     <button type="button" class="btn btn-secondary me-2">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" id="guardar" class="btn btn-primary"><i class="fas fa-bookmark"></i> Guardar  </button>
+                                    <button type="button" id="modificar" class="btn btn-warning d-none"> <i class="fas fa-edit"></i>Modificar</button>
                                 </div>
                             </form>
                         </div>
@@ -59,73 +61,101 @@
                 </div>
                 <div class="col-12">
                     <div class="card shadow-sm">
-                       <div class="container my-4">
-                           <h1>Lista de Empleados</h1>
-                           <table class="table table-striped">
-                               <thead>
-                                   <tr>
-                                       <th>ID Empleado</th>
-                                       <th>ID Cargo</th>
-                                       <th>ID Tercero</th>
-                                       <th>Email</th>
-                                       <th>Fecha de Contratación</th>
-                                       <th>Dirección</th>
-                                       <th>Fecha de Nacimiento</th>
-                                       <th>Género</th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                   {{#each empleados}}
-                                   <tr class="clickable-row" 
-                                       data-id_empleado="{{this.id_empleado}}" 
-                                       data-id_cargo="{{this.id_cargo}}" 
-                                       data-id_tercero="{{this.id_tercero}}" 
-                                       data-email="{{this.email}}" 
-                                       data-fecha_contratacion="{{this.fecha_contratacion}}" 
-                                       data-direccion="{{this.direccion}}" 
-                                       data-fecha_nacimiento="{{this.fecha_nacimiento}}" 
-                                       data-genero="{{this.genero}}">
-                                       <td>{{this.id_empleado}}</td>
-                                       <td>{{this.id_cargo}}</td>
-                                       <td>{{this.id_tercero}}</td>
-                                       <td>{{this.email}}</td>
-                                       <td>{{this.fecha_contratacion}}</td>
-                                       <td>{{this.direccion}}</td>
-                                       <td>{{this.fecha_nacimiento}}</td>
-                                       <td>{{this.genero}}</td>
-                                   </tr>
-                                   {{/each}}
-                               </tbody>
-                           </table>
-                       </div>
-                       <script>
-                           document.addEventListener('DOMContentLoaded', function () {
-                               const rows = document.querySelectorAll('.clickable-row');
-                               rows.forEach(row => {
-                                   row.addEventListener('click', function () {
-                                       const id_empleado = this.getAttribute('data-id_empleado');
-                                       const id_cargo = this.getAttribute('data-id_cargo');
-                                       const id_tercero = this.getAttribute('data-id_tercero');
-                                       const email = this.getAttribute('data-email');
-                                       const fecha_contratacion = this.getAttribute('data-fecha_contratacion');
-                                       const direccion = this.getAttribute('data-direccion');
-                                       const fecha_nacimiento = this.getAttribute('data-fecha_nacimiento');
-                                       const genero = this.getAttribute('data-genero');
-                                       document.getElementById('id_empleado').value = id_empleado;
-                                       document.getElementById('id_cargo').value = id_cargo;
-                                       document.getElementById('id_tercero').value = id_tercero;
-                                       document.getElementById('email').value = email;
-                                       document.getElementById('fecha_contratacion').value = fecha_contratacion;
-                                       document.getElementById('direccion').value = direccion;
-                                       document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
-                                       document.getElementById('genero').value = genero;
-                                   });
-                               });
-                           });
-                       </script>
-                   </div>
+                        <div class="container my-4">
+                            <h1>Lista de Empleados</h1>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Empleado</th>
+                                        <th>ID Cargo</th>
+                                        <th>ID Tercero</th>
+                                        <th>Email</th>
+                                        <th>Fecha de Contratación</th>
+                                        <th>Dirección</th>
+                                        <th>Fecha de Nacimiento</th>
+                                        <th>Género</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each empleados}}
+                                    <tr class="clickable-row" 
+                                        data-id_empleado="{{this.id_empleado}}" 
+                                        data-id_cargo="{{this.id_cargo}}" 
+                                        data-id_tercero="{{this.id_tercero}}" 
+                                        data-email="{{this.email}}" 
+                                        data-fecha_contratacion="{{this.fecha_contratacion}}" 
+                                        data-direccion="{{this.direccion}}" 
+                                        data-fecha_nacimiento="{{this.fecha_nacimiento}}" 
+                                        data-genero="{{this.genero}}">
+                                        <td>{{this.id_empleado}}</td>
+                                        <td>{{this.id_cargo}}</td>
+                                        <td>{{this.id_tercero}}</td>
+                                        <td>{{this.email}}</td>
+                                        <td>{{this.fecha_contratacion}}</td>
+                                        <td>{{this.direccion}}</td>
+                                        <td>{{this.fecha_nacimiento}}</td>
+                                        <td>{{this.genero}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rows = document.querySelectorAll('.clickable-row');
+            const modificarButton = document.getElementById('modificar');
+            const guardarButton = document.getElementById('guardar');
+            const form = document.getElementById('empleados-form');
+            let isModifying = false;
+
+            function clearForm() {
+                form.reset();
+            }
+
+            rows.forEach(row => {
+                row.addEventListener('click', function () {
+                    const id_empleado = this.getAttribute('data-id_empleado');
+                    const id_cargo = this.getAttribute('data-id_cargo');
+                    const id_tercero = this.getAttribute('data-id_tercero');
+                    const email = this.getAttribute('data-email');
+                    const fecha_contratacion = this.getAttribute('data-fecha_contratacion');
+                    const direccion = this.getAttribute('data-direccion');
+                    const fecha_nacimiento = this.getAttribute('data-fecha_nacimiento');
+                    const genero = this.getAttribute('data-genero');
+                    document.getElementById('id_empleado').value = id_empleado;
+                    document.getElementById('id_cargo').value = id_cargo;
+                    document.getElementById('id_tercero').value = id_tercero;
+                    document.getElementById('email').value = email;
+                    document.getElementById('fecha_contratacion').value = fecha_contratacion;
+                    document.getElementById('direccion').value = direccion;
+                    document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
+                    document.getElementById('genero').value = genero;
+
+                    guardarButton.classList.add('d-none');
+                    modificarButton.classList.remove('d-none');
+                });
+            });
+
+            modificarButton.addEventListener('click', function () {
+                isModifying = !isModifying;
+                modificarButton.classList.add('d-none');
+                guardarButton.classList.remove('d-none');
+                clearForm();
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Aquí puedes agregar la lógica para enviar el formulario
+                clearForm();
+                guardarButton.classList.remove('d-none');
+                modificarButton.classList.add('d-none');
+            });
+        });
+    </script>
 </section>

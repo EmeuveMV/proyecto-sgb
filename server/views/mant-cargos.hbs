@@ -1,95 +1,123 @@
-<section>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <div class="d-flex flex-column min-vh-100">
-        <header class="sticky-top bg-white border-bottom">
-            <nav aria-label="breadcrumb" class="container">
-                <ol class="breadcrumb my-2">
-                    <li class="breadcrumb-item"><a href="index.handlebars">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Cargos</li>
-                </ol>
-            </nav>
-        </header>
-        <main class="flex-grow-1 container my-4">
-            <div class="row g-4">
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Mantenimiento de Cargos</h3>
-                            <p class="card-text">Gestiona la información de los cargos</p>
-                            <form class="row g-3" action="/mant-cargos" method="POST">
-                                <div class="col-md-6">
-                                    <label for="id_cargo" class="form-label">ID Cargo</label>
-                                    <input type="number" class="form-control" id="id_cargo" name="id_cargo">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="cargo" class="form-label">Cargo</label>
-                                    <input type="text" class="form-control" id="cargo" name="cargo">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="salario" class="form-label">Salario</label>
-                                    <input type="number" class="form-control" id="salario" step="0.01" name="salario">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="descripcion" class="form-label">Descripción</label>
-                                    <input type="text" class="form-control" id="descripcion" name="descripcion">
-                                </div>
-                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
-                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form>
-                        </div>
+<title>Mantenimiento de Cargos</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<div class="d-flex flex-column min-vh-100">
+    <header class="sticky-top bg-white border-bottom">
+        <nav aria-label="breadcrumb" class="container">
+            <ol class="breadcrumb my-2">
+                <li class="breadcrumb-item"><a href="index.handlebars">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Cargos</li>
+            </ol>
+        </nav>
+    </header>
+    <main class="flex-grow-1 container my-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Mantenimiento de Cargos</h3>
+                        <p class="card-text">Gestiona la información de los cargos</p>
+                        <form id="cargos-form" class="row g-3" action="/mant-cargos" method="POST">
+                            <div class="col-md-6">
+                                <label for="id_cargo" class="form-label">ID Cargo</label>
+                                <input type="number" class="form-control" id="id_cargo" name="id_cargo">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cargo" class="form-label">Cargo</label>
+                                <input type="text" class="form-control" id="cargo" name="cargo">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="salario" class="form-label">Salario</label>
+                                <input type="number" class="form-control" id="salario" step="0.01" name="salario">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion">
+                            </div>
+                            <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                <button type="submit" id="guardar" class="btn btn-primary">
+                                    <i class="fas fa-bookmark"></i> Guardar
+                                </button>
+                                <button type="button" id="modificar" class="btn btn-warning d-none">Modificar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                       <div class="container my-4">
-                           <h1>Lista de Cargos</h1>
-                           <table class="table table-striped">
-                               <thead>
-                                   <tr>
-                                       <th>ID Cargo</th>
-                                       <th>Cargo</th>
-                                       <th>Salario</th>
-                                       <th>Descripción</th>
-                                   </tr>
-                               </thead>
-                               <tbody>
-                                   {{#each cargos}}
-                                   <tr class="clickable-row" 
-                                       data-id_cargo="{{this.id_cargo}}" 
-                                       data-cargo="{{this.cargo}}" 
-                                       data-salario="{{this.salario}}" 
-                                       data-descripcion="{{this.descripcion}}">
-                                       <td>{{this.id_cargo}}</td>
-                                       <td>{{this.cargo}}</td>
-                                       <td>{{this.salario}}</td>
-                                       <td>{{this.descripcion}}</td>
-                                   </tr>
-                                   {{/each}}
-                               </tbody>
-                           </table>
-                       </div>
-                       <script>
-                           document.addEventListener('DOMContentLoaded', function () {
-                               const rows = document.querySelectorAll('.clickable-row');
-                               rows.forEach(row => {
-                                   row.addEventListener('click', function () {
-                                       const id_cargo = this.getAttribute('data-id_cargo');
-                                       const cargo = this.getAttribute('data-cargo');
-                                       const salario = this.getAttribute('data-salario');
-                                       const descripcion = this.getAttribute('data-descripcion');
-                                       document.getElementById('id_cargo').value = id_cargo;
-                                       document.getElementById('cargo').value = cargo;
-                                       document.getElementById('salario').value = salario;
-                                       document.getElementById('descripcion').value = descripcion;
-                                   });
-                               });
-                           });
-                       </script>
-                   </div>
+            </div>
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="container my-4">
+                        <h1>Lista de Cargos</h1>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID Cargo</th>
+                                    <th>Cargo</th>
+                                    <th>Salario</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each cargos}}
+                                <tr class="clickable-row" data-id_cargo="{{this.id_cargo}}" data-cargo="{{this.cargo}}"
+                                    data-salario="{{this.salario}}" data-descripcion="{{this.descripcion}}">
+                                    <td>{{this.id_cargo}}</td>
+                                    <td>{{this.cargo}}</td>
+                                    <td>{{this.salario}}</td>
+                                    <td>{{this.descripcion}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const rows = document.querySelectorAll('.clickable-row');
+                            const modificarButton = document.getElementById('modificar');
+                            const guardarButton = document.getElementById('guardar');
+                            const form = document.getElementById('cargos-form');
+                            let isModifying = false;
+
+                            function clearForm() {
+                                form.reset();
+                            }
+
+                            rows.forEach(row => {
+                                row.addEventListener('click', function () {
+                                    const id_cargo = this.getAttribute('data-id_cargo');
+                                    const cargo = this.getAttribute('data-cargo');
+                                    const salario = this.getAttribute('data-salario');
+                                    const descripcion = this.getAttribute('data-descripcion');
+                                    document.getElementById('id_cargo').value = id_cargo;
+                                    document.getElementById('cargo').value = cargo;
+                                    document.getElementById('salario').value = salario;
+                                    document.getElementById('descripcion').value = descripcion;
+
+                                    guardarButton.classList.add('d-none');
+                                    modificarButton.classList.remove('d-none');
+                                });
+                            });
+
+                            modificarButton.addEventListener('click', function () {
+                                isModifying = !isModifying;
+                                modificarButton.classList.add('d-none');
+                                guardarButton.classList.remove('d-none');
+                                clearForm();
+                            });
+
+                            form.addEventListener('submit', function (event) {
+                                event.preventDefault();
+                                // Aquí puedes agregar la lógica para enviar el formulario
+                                clearForm();
+                                guardarButton.classList.remove('d-none');
+                                modificarButton.classList.add('d-none');
+                            });
+                        });
+                    </script>
                 </div>
             </div>
-        </main>
-    </div>
-</section>
+        </div>
+    </main>
+</div>

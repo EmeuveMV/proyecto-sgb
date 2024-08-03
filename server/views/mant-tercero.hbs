@@ -1,82 +1,101 @@
-<section>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <div class="d-flex flex-column min-vh-100">
-        <header class="sticky-top bg-white border-bottom">
-            <nav aria-label="breadcrumb" class="container">
-                <ol class="breadcrumb my-2">
-                    <li class="breadcrumb-item"><a href="index.handlebars">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Terceros</li>
-                </ol>
-            </nav>
-        </header>
-        <main class="flex-grow-1 container my-4">
-            <div class="row g-4">
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Mantenimiento de Terceros</h3>
-                            <p class="card-text">Gestiona la información de los terceros</p>
-                            <form class="row g-3"  action="/mant-tercero" method="POST"> 
-
-                                <div class="col-md-6">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="apellido" class="form-label">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" name="apellido">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="telefono" class="form-label">Teléfono</label>
-                                    <input type="number" class="form-control" id="telefono" name="telefono">
-                                </div>
-                                <div class="col-12">
-                                    <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"> 
-                                </div>
-                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;;">
-                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form>
-                        </div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="d-flex flex-column min-vh-100">
+    <header class="sticky-top bg-white border-bottom">
+        <nav aria-label="breadcrumb" class="container">
+            <ol class="breadcrumb my-2">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Terceros</li>
+            </ol>
+        </nav>
+    </header>
+    <main class="flex-grow-1 container my-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Mantenimiento de Terceros</h3>
+                        <p class="card-text">Gestiona la información de los terceros</p>
+                        <form id="terceros-form" class="row g-3" action="/mant-tercero" method="POST">
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="apellido" class="form-label">Apellido</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="number" class="form-control" id="telefono" name="telefono">
+                            </div>
+                            <div class="col-12">
+                                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                            </div>
+                            <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                <button type="submit" id="guardar" class="btn btn-primary">
+                                    <i class="fas fa-bookmark"></i> Guardar
+                                </button>
+                                <button type="button" id="modificar" class="btn btn-warning d-none"> <i
+                                        class="fas fa-edit"></i> Modificar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                       <div class="container my-4">
-    <h1>Lista de Usuarios</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Teléfono</th>
-                <th>Fecha de Nacimiento</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each users}}
-            <tr class="clickable-row" 
-                data-id="{{this.id}}" 
-                data-nombre="{{this.nombre}}" 
-                data-apellido="{{this.apellido}}" 
-                data-telefono="{{this.telefono}}" 
-                data-fecha_nacimiento="{{this.fecha_nacimiento}}">
-                <td>{{this.nombre}}</td>
-                <td>{{this.apellido}}</td>
-                <td>{{this.telefono}}</td>
-                <td>{{this.fecha_nacimiento}}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+            </div>
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="container my-4">
+                        <h1>Lista de Usuarios</h1>
+                        <form method="get" action="/home">
+                            <div class="mb-3">
+                                <input type="text" id="filtro" name="filtro" class="form-control"
+                                    placeholder="Filtrar por nombre, apellido, etc.">
+                                <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+                            </div>
+                        </form>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Teléfono</th>
+                                    <th>Fecha de Nacimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-usuarios">
+                                {{#each users}}
+                                <tr class="clickable-row" data-id="{{this.id}}" data-nombre="{{this.nombre}}"
+                                    data-apellido="{{this.apellido}}" data-telefono="{{this.telefono}}"
+                                    data-fecha_nacimiento="{{this.fecha_nacimiento}}">
+                                    <td>{{this.nombre}}</td>
+                                    <td>{{this.apellido}}</td>
+                                    <td>{{this.telefono}}</td>
+                                    <td>{{this.fecha_nacimiento}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const rows = document.querySelectorAll('.clickable-row');
+        const modificarButton = document.getElementById('modificar');
+        const guardarButton = document.getElementById('guardar');
+        const form = document.getElementById('terceros-form');
+        let isModifying = false;
+
+        function clearForm() {
+            form.reset();
+        }
 
         rows.forEach(row => {
             row.addEventListener('click', function () {
@@ -89,17 +108,24 @@
                 document.getElementById('apellido').value = apellido;
                 document.getElementById('telefono').value = telefono;
                 document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
+
+                guardarButton.classList.add('d-none');
+                modificarButton.classList.remove('d-none');
             });
+        });
+
+        modificarButton.addEventListener('click', function () {
+            isModifying = !isModifying;
+            modificarButton.classList.add('d-none');
+            guardarButton.classList.remove('d-none');
+            clearForm();
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            clearForm();
+            guardarButton.classList.remove('d-none');
+            modificarButton.classList.add('d-none');
         });
     });
 </script>
-
-
-
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-</section>
