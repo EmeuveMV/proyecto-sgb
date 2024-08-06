@@ -69,6 +69,11 @@ const register = async (req, res) => {
             return res.status(404).json({ error: 'Servicio no encontrado' });
         }
 
+        //Verificar que la fecha no sea menor que la actual
+        if (fecha_cita < Date.now()) {
+            return res.status(404).json({ error: 'La fecha no puede ser menor que la actual'});
+        }
+
         // Crear la cita
         const nuevaCita = await Cita.create({
             id_cliente,

@@ -9,15 +9,18 @@ const obtenerDatosTerceros = async (req, res) => {
             res.status(404).json('No se encontraron datos');
             return;
           }
+          console.log(terceros);
 
-          let name = terceros.map(terceros => ({name: terceros.name})); 
-          console.log(name);
-          let lastname = terceros.map(terceros => ({lastname: terceros.lastname})); 
-          console.log(lastname);
-
-        return res.render('../views/mantenimientos/mant-tercero', {name: terceros.name, 
+          let arregloterceros = terceros.map(terceros => ({
+            id: terceros.id,
+            name: terceros.name,
             lastname: terceros.lastname,
-        })
+            phone: terceros.phone,
+            email: terceros.email,
+            birth: terceros.birth
+        }));
+
+        return res.render('../views/mantenimientos/mant-tercero', {terceros: arregloterceros}) 
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -27,30 +30,10 @@ const obtenerDatosTerceros = async (req, res) => {
     }
 }
 
-//Para cuando se requiera por nombre o id
-// const obtenerDatosTerceros = async (req, res) => {
-//     try {
-//         const terceros = await Tercero.findOne({where: {name: 'Vladimir'}});
-//         if (!terceros) {
-//             res.status(404).json('No se encontraron datos');
-//             return;
-//           }
-//         console.log(terceros);
-//         return res.render('../views/mant-tercero', {
-//             name: terceros.dataValues.name,
-//             lastname: terceros.dataValues.lastname,
-//             phone: terceros.dataValues.phone,
-//             email: terceros.dataValues.email,
-//             birth: terceros.dataValues.birth,
-//         })
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({
-//             ok: false,
-//             msg: 'Error interno del servidor'
-//         })
-//     }
-// }
+// Modificar tercero
+const modificarTercero = async (req, res) => {
+    
+}
 
 export const terceroController = {
     obtenerDatosTerceros,

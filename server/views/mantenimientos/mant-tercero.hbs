@@ -1,5 +1,9 @@
+<style>
+  .clickable-row{
+    cursor: pointer;
+  }
+</style>
 <section>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <div class="d-flex flex-column min-vh-100">
         <header class="sticky-top bg-white border-bottom">
@@ -9,7 +13,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Terceros</li>
                 </ol>
             </nav> 
-        </header>
+        </header> 
         <main class="flex-grow-1 container my-4">
             <div class="row g-4">
                 <div class="col-12">
@@ -18,10 +22,9 @@
                             <h3 class="card-title">Mantenimiento de Terceros</h3>
                             <p class="card-text">Gestiona la información de los terceros</p>
                             <form class="row g-3"  action="/mant-tercero" method="POST"> 
-
                                 <div class="col-md-6">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre">
+                                    <input type="text" class="form-control" id="nombre" name="name">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="apellido" class="form-label">Apellido</label>
@@ -50,6 +53,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Teléfono</th>
@@ -62,13 +66,14 @@
             <tr class="clickable-row" 
                 data-id="{{this.id}}" 
                 data-nombre="{{this.name}}" 
-                data-apellido="{{this.apellido}}" 
-                data-telefono="{{this.telefono}}" 
-                data-fecha_nacimiento="{{this.fecha_nacimiento}}">
+                data-apellido="{{this.lastname}}" 
+                data-telefono="{{this.phone}}" 
+                data-fecha_nacimiento="{{this.birth}}">
+                <td>{{id}}</td>
                 <td>{{name}}</td>
-                <td>{{apellido}}</td>
-                <td>{{telefono}}</td>
-                <td>{{fecha_nacimiento}}</td>
+                <td>{{lastname}}</td>
+                <td>{{phone}}</td>
+                <td>{{birth}}</td>
             </tr>
             {{/each}}
             {{/if}}
