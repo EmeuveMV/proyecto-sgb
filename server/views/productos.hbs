@@ -1,0 +1,67 @@
+<section>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <div class="d-flex flex-column min-vh-100">
+    <header class="sticky-top bg-white border-bottom">
+      <nav aria-label="breadcrumb" class="container">
+        <ol class="breadcrumb my-2">
+          <li class="breadcrumb-item"><a href="/index.hbs">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Registro de Producto</li>
+        </ol>
+      </nav>
+    </header>
+    <main class="flex-grow-1 container my-4">
+      <div class="row g-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="container my-4">
+              <div class="text-center">
+                <h1 class="h4 font-weight-bold">Registro de Producto</h1>
+                <p class="text-muted">Complete el formulario a continuación para registrar un nuevo producto.</p>
+              </div>
+              <form class="row g-3" action="/productos" method="POST">
+                <!-- Combobox para Proveedor -->
+                <div class="col-md-6">
+                  <label for="id_proveedor" class="form-label">Proveedor</label>
+                  <select class="form-control" id="id_proveedor" name="id_proveedor" required>
+                    <option value="" disabled selected>Seleccione un proveedor</option>
+                    {{#each proveedores}}
+                      <option value="{{this.id_proveedor}}">{{this.nombre}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+
+                <!-- Combobox para Categoría -->
+                <div class="col-md-6">
+                  <label for="id_categoria" class="form-label">Categoría</label>
+                  <select class="form-control" id="id_categoria" name="id_categoria" required>
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    {{#each categorias}}
+                      <option value="{{this.id_categoria}}">{{this.nombre}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+
+                <!-- Otros campos para la tabla productos -->
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre del Producto</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="cantidad_en_stock" class="form-label">Cantidad</label>
+                  <input type="number" class="form-control" id="cantidad_en_stock" name="cantidad_en_stock">
+                </div>
+                <div class="col-12">
+                  <label for="descripcion" class="form-label">Descripción</label>
+                  <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                </div>
+                <div class="col-12 d-flex justify-content-center" style="margin-top: 20px;">
+                  <button type="submit" class="btn btn-primary">Registrar Producto</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
