@@ -1,0 +1,49 @@
+             
+                <div class="col-lg-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">Mantenimiento de Permisos</h3>
+                            <p class="card-text">Gestiona la información de los permisos</p>
+                            <form id="permisos-form" class="row g-3 mb-4" action="/mant-permisos" method="POST">
+                                <div class="col-md-6">
+                                    <label for="id_permiso" class="form-label">ID Permiso</label>
+                                    <input type="number" class="form-control" id="id_permiso" name="id_permiso">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nombre_permiso" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_permiso" name="nombre_permiso">
+                                </div>
+                                <div class="col-12">
+                                    <label for="descripcion_permiso" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="descripcion_permiso" name="descripcion_permiso">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
+                                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                                    <button type="submit" id="guardar" class="btn btn-primary"><i class="fas fa-bookmark"></i> Guardar  </button>
+                                    <button type="button" id="modificar" class="btn btn-warning d-none"> <i class="fas fa-edit"></i>Modificar</button>
+                                </div>
+                            </form>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Permiso</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each permisos}}
+                                    <tr class="clickable-row" 
+                                        data-id_permiso="{{this.id_permiso}}" 
+                                        data-nombre_permiso="{{this.nombre_permiso}}" 
+                                        data-descripcion_permiso="{{this.descripcion_permiso}}">
+                                        <td>{{this.id_permiso}}</td>
+                                        <td>{{this.nombre_permiso}}</td>
+                                        <td>{{this.descripcion_permiso}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>

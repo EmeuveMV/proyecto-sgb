@@ -4,7 +4,7 @@
     <header class="sticky-top bg-white border-bottom">
         <nav aria-label="breadcrumb" class="container">
             <ol class="breadcrumb my-2">
-                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/index">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Mantenimiento de Terceros</li>
             </ol>
         </nav>
@@ -17,6 +17,10 @@
                         <h3 class="card-title">Mantenimiento de Terceros</h3>
                         <p class="card-text">Gestiona la información de los terceros</p>
                         <form id="terceros-form" class="row g-3" action="/mant-tercero" method="POST">
+
+                                {{!-- <label for="id" class="form-label">ID</label> --}}
+                            <input type="hidden" id="id" name="id">
+                            </div>
                             <div class="col-md-6">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre">
@@ -34,19 +38,21 @@
                                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
                             </div>
                             <div class="col-12 d-flex justify-content-end" style="margin-top: 20px;">
-                                <button type="button" class="btn btn-secondary me-2">Cancelar</button>
-                                <button type="submit" id="guardar" class="btn btn-primary">
-                                    <i class="fas fa-bookmark"></i> Guardar
+                                <button type="button" class="btn btn-secondary me-2 mr-2 mb-2" id="cancelar">Cancelar</button>
+                                <button type="submit" id="guardar" value="guardar" class="btn btn-primary">
+                                    <i class="fas fa-bookmark mb-2"></i> Guardar
                                 </button>
-                                <button type="button" id="modificar" class="btn btn-warning d-none"> <i
-                                        class="fas fa-edit"></i> Modificar</button>
+                                <button type="submit" id="modificar" value="modificar" class="btn btn-warning d-none"> <i
+                                        class="fas fa-edit ml-2"></i> Modificar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <br>
             <div class="col-12">
                 <div class="card shadow-sm">
+
                     <div class="container my-4">
                         <h1>Lista de Usuarios</h1>
                         <form method="get" action="/home">
@@ -59,6 +65,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Apellido</th>
                                     <th>Teléfono</th>
@@ -66,16 +73,19 @@
                                 </tr>
                             </thead>
                             <tbody id="tabla-usuarios">
-                                {{#each users}}
+                                {{#if terceros}}
+                                {{#each terceros}}
                                 <tr class="clickable-row" data-id="{{this.id}}" data-nombre="{{this.nombre}}"
                                     data-apellido="{{this.apellido}}" data-telefono="{{this.telefono}}"
                                     data-fecha_nacimiento="{{this.fecha_nacimiento}}">
+                                    <td>{{this.id}}</td>
                                     <td>{{this.nombre}}</td>
                                     <td>{{this.apellido}}</td>
                                     <td>{{this.telefono}}</td>
                                     <td>{{this.fecha_nacimiento}}</td>
                                 </tr>
                                 {{/each}}
+                                {{/if}}
                             </tbody>
                         </table>
                     </div>
@@ -90,6 +100,7 @@
         const rows = document.querySelectorAll('.clickable-row');
         const modificarButton = document.getElementById('modificar');
         const guardarButton = document.getElementById('guardar');
+        const cancelarButton = document.getElementById('cancelar');
         const form = document.getElementById('terceros-form');
         let isModifying = false;
 
@@ -99,33 +110,87 @@
 
         rows.forEach(row => {
             row.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
                 const nombre = this.getAttribute('data-nombre');
                 const apellido = this.getAttribute('data-apellido');
                 const telefono = this.getAttribute('data-telefono');
                 const fecha_nacimiento = this.getAttribute('data-fecha_nacimiento');
 
+                document.getElementById('id').value = id;
                 document.getElementById('nombre').value = nombre;
                 document.getElementById('apellido').value = apellido;
                 document.getElementById('telefono').value = telefono;
                 document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
-
+                
                 guardarButton.classList.add('d-none');
                 modificarButton.classList.remove('d-none');
             });
         });
 
-        modificarButton.addEventListener('click', function () {
-            isModifying = !isModifying;
+        //modificarButton.addEventListener('click', function () {
+            //isModifying = !isModifying;
+            //modificarButton.classList.add('d-none');
+            //guardarButton.classList.remove('d-none');
+        //});
+
+        cancelarButton.addEventListener('click', function () {
+            form.reset();
+            form.method = 'POST';
+            document.getElementById('id').value = '';
             modificarButton.classList.add('d-none');
             guardarButton.classList.remove('d-none');
             clearForm();
         });
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            clearForm();
-            guardarButton.classList.remove('d-none');
-            modificarButton.classList.add('d-none');
+       form.addEventListener('submit', function (event) {
+        
+
+        if ( event.submitter === modificarButton ){
+                event.preventDefault();
+                const formData = new FormData(this)
+                console.log("formdata: ", formData)
+                let data = {}
+                formData.forEach((value, key) => {
+                    data[key] = value
+                })
+                console.log("data: ", JSON.stringify(data))
+                fetch('/mant-tercero', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else if (event.submitter === guardarButton) {
+                event.preventDefault();
+                const formData = new FormData(this)
+                console.log("formdata: ", formData)
+                let data = {}
+                formData.forEach((value, key) => {
+                    data[key] = value
+                })
+                console.log("data: ", JSON.stringify(data))
+                fetch('/mant-tercero', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         });
+
     });
 </script>

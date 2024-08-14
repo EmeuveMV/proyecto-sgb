@@ -1,33 +1,30 @@
 
- <link rel="stylesheet" href="/views/style/estilos.css"><body>
+ {{!-- <link rel="stylesheet" href="/views/style/estilos.css"> <i class="bi bi-box-arrow-left"></i>--}}
+ <body>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
   <header class="main-header">
-    <label for="btn-nav" class="btn-nav"><i class="fas fa-bars">MENU
-  
-    </i></label>
+    <label for="btn-nav" class="btn-nav"><i class="bi bi-layout-text-sidebar-reverse" style="color: antiquewhite;"></i></label>
     <input type="checkbox" id="btn-nav">
 
     <nav>
       <ul class="navigation">
-        <li><a href="#facturacion">Facturación</a></li>
-        <li> <a href="#citas">Gestión de Citas</a></li>
-        <li> <a href="#clientes">Gestión de Clientes</a></li>
-        <li> <a href="#citas-domicilio">Citas a Domicilio</a></li>
-        <li> <a href="#personal">Gestión de Personal</a></li>
-        <li><a href="#nomina">Gestión de Nómina</a></li>
-        <li>  <a href="#inventario">Gestión de Inventario</a></li>
-        <li><a href="#almacenamiento">Almacenamiento de Productos</a></li>
-        <li><a href="#inventario-uso-interno">Inventario de Productos de Uso Interno</a></li>
-        <li> <a href="#descuentos">Gestión de Descuentos</a>  </li>
-        <li> <a href="#promociones">Promociones de Producto y Servicios</a></li>
-        <li> <a href="#vehiculos">Gestión de Vehículos</a></li>
+        <li> <a href="/facturacion"> <i class="bi bi-receipt"></i> Facturación</a></li>
+        <li> <a href="/mant-tercero"><i class="bi bi-calendar2-week"></i> Persona</a></li>
+        <li> <a href="./mant-empleado"><i class="bi bi-person-vcard"></i> Empleado</a></li>
+        <li> <a href="/mant-cliente"><i class="bi bi-person-badge"></i> Clientes</a></li>
+        <li><a href="#nomina"><i class="bi bi-coin"></i> Nómina</a></li>
+        <li><a href="#inventario"><i class="bi bi-archive"></i> Inventario</a></li>
+        <li><a href="#inventario-uso-interno"><i class="bi bi-battery-half"></i> Productos en uso</a></li>
+        <li> <a href="#descuentos"><i class="bi bi-arrow-down-square"></i> Descuentos</a></li>
+        <li> <a href="#promociones"><i class="bi bi-newspaper"></i> Promociones</a></li>
         </ul>
     </nav>
-
   </header>
 
   <main>
     <section>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
      
 
       <div class="d-flex flex-column min-vh-100">
@@ -37,20 +34,20 @@
             <div class="container">
               <div class="row align-items-center">
                 <div class="col-md-6">
-                  <h1 class="display-4 font-weight-bold">Bienvenido a Nuestra Barbería</h1>
+                  <h1 class="display-4">BIENVENIDOS A NUESTRA BARBERIA</h1>
                   <p class="text-secondary mt-3">¡Experimenta los mejores cortes de cabello y servicios de
                     cuidado en la ciudad! ¡Reserva tu cita hoy mismo!</p>
-                  <a class="btn btn-primary mt-4" href="citas.html" rel="ugc">Reservar una Cita</a>
+                  <a class="btn btn-primary mt-4" href="/citas" rel="ugc">Reservar una Cita  {{ name }}</a>
                 </div>
                 <div class="col-md-6">
-                  <img src="/fotos/interir.webp" alt="Interior de la Barbería" class="img-fluid rounded">
+                  <img src="../img/interior.webp" alt="Interior de la Barbería" class="img-fluid rounded">
                 </div>
               </div>
             </div>
           </section>
           <section class="py-5">
             <div class="container text-center">
-              <h2 class="display-4 font-weight-bold">Servicios Destacados</h2>
+              <h2 class="display-4">SERVICIOS DESTACADOS</h2>
               <p class="text-secondary mb-4">Consulta nuestros servicios más populares y reserva tu cita hoy
                 mismo.</p>
               <div class="row">
@@ -66,7 +63,7 @@
                         <circle cx="6" cy="18" r="3"></circle>
                         <path d="M14.8 14.8 20 20"></path>
                       </svg>
-                      <h5 class="card-title">Corte de Cabello</h5>
+                      <h5 class="card-title">Cortes de cabello</h5>
                       <p class="card-text">Obtén un corte de cabello fresco y con estilo de nuestros
                         barberos experimentados.</p>
                     </div>
@@ -87,7 +84,7 @@
                         <circle cx="12" cy="12" r="2"></circle>
                         <path d="m13.41 10.59 5.66-5.66"></path>
                       </svg>
-                      <h5 class="card-title">Afeitado</h5>
+                      <h5 class="card-title">Afeitados</h5>
                       <p class="card-text">Disfruta de un afeitado cómodo y cercano con nuestros servicios
                         premium de afeitado.</p>
                     </div>
@@ -103,7 +100,7 @@
                         <path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"></path>
                         <path d="M6 14h12"></path>
                       </svg>
-                      <h5 class="card-title">Recorte de Barba</h5>
+                      <h5 class="card-title">Recortes de barba</h5>
                       <p class="card-text">Mantén tu barba luciendo nítida y bien cuidada.</p>
                     </div>
                   </div>
@@ -113,7 +110,7 @@
           </section>
           <section class="bg-light py-5">
             <div class="container text-center">
-              <h2 class="display-4 font-weight-bold">Lo Que Dicen Nuestros Clientes</h2>
+              <h2 class="display-4">NUESTROS CLIENTES OPINAN</h2>
               <p class="text-secondary mb-4">Escucha a nuestros clientes satisfechos sobre su experiencia en
                 nuestra barbería.</p>
               <div class="row">
@@ -187,10 +184,13 @@
     margin: 0;
     box-sizing: border-box;
   }
+
+  h1, h2 {
+    font-size: 2.5px;
+  }
   
   body{
-    font-family:'Roboto' , 'sans-serif';
-    overflow:hidden;
+    font-family:'Roboto', 'sans-serif';
   }
   .main {
     min-width: 1510px;
@@ -200,17 +200,15 @@
   .main-header{
     background: #2219bd;
     width: 100%;
-    height:50px;
+    height: 46px;
   }
   
   nav{
     position: absolute;
     left:0;
-    top:0;
+    top: 46px;
     width: 200px;
-    top:50px;
-    height:calc(100vh - 50px);
-    background:#dd8383;
+    background:  #55c7f1;
     transform:translateX(-100%);
     transition:.4s ease;
   }
@@ -231,7 +229,7 @@
   }
   
   .navigation a:hover{
-    transform:translateX(10%);
+    transform: translateX(10%);
   }
   
   #btn-nav{

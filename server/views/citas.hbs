@@ -1,5 +1,6 @@
 <section>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <div class="d-flex flex-column min-vh-100">
     <header class="sticky-top bg-white border-bottom">
       <nav aria-label="breadcrumb" class="container">
@@ -18,29 +19,25 @@
                 <h1 class="h4 font-weight-bold">Reservar una Cita</h1>
                 <p class="text-muted">Complete el formulario a continuación para programar su cita.</p>
               </div>
-              <form class="row g-3"  action="/citas" method="POST">
+              <form class="row g-3" id="citas-form" action="/citas" method="POST">
                 <div class="col-md-6">
-                  <label for="id_cliente" class="form-label">ID Cliente</label>
-                  <input type="number" class="form-control" id="id_cliente" name="id_cliente" placeholder="Ingrese el ID del cliente">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" placeholder="Ingrese su nombre">
                 </div>
                 <div class="col-md-6">
                   <label for="id_empleado" class="form-label">Empleado</label>
-                  <select class="form-control" name="id_empleado">
-                    {{#if barberos}}
+                  <select class="form-control" id="id_empleado" name="id_empleado">
                     {{#each barberos}}
-                      <option value={{id}}>{{name}}</option> 
+                      <option value={{id}}>{{nombre}}</option>
                     {{/each}}
-                    {{/if}}
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label for="id_servicio" class="form-label">Servicio</label>
-                  <select class="form-control" name="id_servicio">
-                    {{#if servicios}}
+                  <select class="form-control" id="id_servicio" name="id_servicio">
                     {{#each servicios}}
                       <option value={{id}}>{{servicios}}</option>
                     {{/each}}
-                    {{/if}}
                   </select>
                 </div>
                 <div class="col-md-6">
@@ -48,18 +45,22 @@
                   <input type="datetime-local" class="form-control" id="fecha_cita" name="fecha_cita">
                 </div>
                 <div class="col-md-6">
-                  <label for="estado" class="form-label">Estado</label>
-                  <select class="form-control" id="estado" name="estado">
-                    <option value="confirmado">Confirmado</option>
-                    <option value="pendiente">Pendiente</option>
+                  <label for="estado" class="form-label">Local/Domicilio</label>
+                  <select class="form-control" id="estado" onchange="toggleDireccion()">
+                    <option value="1">Local</option>
+                    <option value="0">A Domicilio</option>
                   </select>
+                </div>
+                <div class="col-md-6" id="direccion_section" style="display: none;">
+                  <label for="direccion" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="direccion" placeholder="Ingrese la dirección">
                 </div>
                 <div class="col-12">
                   <label for="comentario" class="form-label">Comentario</label>
-                  <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Ingrese un comentario"></textarea>
+                  <textarea class="form-control" id="comentario" rows="3" placeholder="Ingrese un comentario"></textarea>
                 </div>
                 <div class="col-12 d-flex justify-content-center" style="margin-top: 20px;">
-                  <button type="submit" class="btn btn-primary">Reservar</button>
+                  <button type="submit" onClick="showAlert()" class="btn btn-primary">Reservar</button>
                 </div>
               </form>
             </div>
@@ -69,3 +70,37 @@
     </main>
   </div>
 </section>
+
+<script>
+    const form = document.getElementById('citas-form');
+
+  function toggleDireccion() {
+    var estado = document.getElementById('estado').value;
+    var direccionSection = document.getElementById('direccion_section');
+    if (estado == '0') {
+      direccionSection.style.display = 'block';
+    } else {
+      direccionSection.style.display = 'none';
+    }
+  }
+
+  function clear(){
+    document.getElementById('nombre_cliente').value = '';
+    document.getElementById('id_empleado').value = '';
+    document.getElementById('id_servicio').value = '';
+    document.getElementById('fecha_cita').value = '';
+    document.getElementById('estado').value = '1';
+    document.getElementById('direccion').value = '';
+    document.getElementById('comentario').value = '';
+  }
+
+  function showAlert() {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Cita reservada!',
+      text: 'Su cita ha sido reservada exitosamente.',
+      confirmButtonText: 'Aceptar'
+    });
+      
+  }
+</script>

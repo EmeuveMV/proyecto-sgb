@@ -13,7 +13,7 @@ export const TipoServicio = sequelize.define('tiposervicio', {
     },
     descripcion: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
 },
     {

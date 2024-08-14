@@ -1,25 +1,26 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Tercero } from "../models/tercero.model.js";
+import { Cliente } from "../models/cliente.model.js";
 
-const obtenerDatosTerceros = async (req, res) => {
+const obtenerDatos = async (req, res) => {
     try {
-        const terceros = await Tercero.findAll();
-        if (!terceros) {
+        const clientes = await Cliente.findAll();
+        if (!clientes) {
             res.status(404).json('No se encontraron datos');
             return;
           } 
         //   console.log(terceros);
 
-          let arregloterceros = terceros.map(terceros => ({
-            id: terceros.id_tercero,
+          let arregloterceros = clientes.map(terceros => ({
+            id: clientes.id_cliente,
             nombre: terceros.nombre,
             apellido: terceros.apellido,
             telefono: terceros.telefono,
             fecha_nacimiento: terceros.fecha_nacimiento,
         }));
 
-        return res.render('../views/mantenimientos/mant-tercero', {terceros: arregloterceros}) 
+        return res.render('../views/mantenimientos/mant-cliente', {terceros: arregloterceros}) 
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -29,7 +30,7 @@ const obtenerDatosTerceros = async (req, res) => {
     }
 }
 
-const registrarTercero = async (req, res) => {
+const registrar = async (req, res) => {
     console.log("LLEGUE AQUIXXXXXX")
     try {
     const { nombre, apellido, telefono, fecha_nacimiento } = req.body;
@@ -54,7 +55,7 @@ const registrarTercero = async (req, res) => {
 }
 
 // Modificar tercero
-const modificarTercero = async (req, res) => {
+const modificar = async (req, res) => {
     const { id, nombre, apellido, telefono, fecha_nacimiento } = req.body;
     console.log("LLEGUE AQUI0")
     try {
@@ -85,8 +86,8 @@ const modificarTercero = async (req, res) => {
     }
 }
 
-export const terceroController = {
-    obtenerDatosTerceros,
-    registrarTercero,
-    modificarTercero,
+export const clienteController = {
+    obtenerDatos,
+    registrar,
+    modificar,
 }

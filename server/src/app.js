@@ -3,6 +3,7 @@ import express from 'express';
 import consolidate from 'consolidate';
 import routes from './routes/home.routes.js';
 import { sequelize } from '../database/connection.js';
+import { engine } from 'express-handlebars';
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3001
 
 try {
     await sequelize.authenticate();
+    // await sequelize.sync({ alter: true });
     console.log('Db Connected');
 } catch (error) {
     console.log(error);
@@ -24,9 +26,14 @@ app.use(express.urlencoded({ extended: true }))
 // app.use(express.urlencoded({ extended: true }));
 
 // Motor de vistas
-app.engine('hbs', consolidate.handlebars); // consolidate se encarga de hacer los ajustes
+app.engine('.hbs', engine({
+    extname: 'hbs',
+    defaultLayout: false,
+    layoutsDir: 'views'
+})); // consolidate se encarga de hacer los ajustes
 app.set('views', './views');
 app.set('view engine', 'hbs'); // Se especifica que se usara handlebars
+app.use(express.static("public"));
 
 
 // Routes

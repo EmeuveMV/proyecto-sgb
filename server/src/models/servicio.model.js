@@ -25,6 +25,7 @@ export const Servicio = sequelize.define('servicios', {
     },
     id_tipo_servicio: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
             model: TipoServicio,
             key: 'id_tipo_servicio' 
@@ -34,4 +35,4 @@ export const Servicio = sequelize.define('servicios', {
 
 // // Definir la asociación
 Servicio.belongsTo(TipoServicio, { foreignKey: 'id_tipo_servicio' });
-// TipoServicio.hasMany(Servicio, { foreignKey: 'id_tipo_servicio' });
+TipoServicio.hasMany(Servicio, { foreignKey: 'id_tipo_servicio' });

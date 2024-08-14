@@ -4,11 +4,12 @@ import { Servicio } from '../models/servicio.model.js';
 import { Tercero } from '../models/tercero.model.js';
 import { Cita } from '../models/cita.model.js';
 import { TipoServicio } from '../models/tiposervicio.model.js';
+import Swal from 'sweetalert2'
 
 const barberos = async (req, res) => {
     try {
         const barberos = await Employee.findAll({
-            where: { id_cargo: 1 },
+            where: { id_cargo: 1, id_estado: 1 },
             // attributes: ['id_empleado', 'id_cargo'], // Selecciona los atributos que quieras de Employee
             include: {
                 model: Tercero
@@ -27,7 +28,7 @@ const barberos = async (req, res) => {
         console.log(arregloservicios);
 
         // res.status(200).json(barberos.tercero.name);
-        let arreglobarberos = barberos.map(barberos => ({ id: barberos.tercero.id, name: barberos.tercero.name }));
+        let arreglobarberos = barberos.map(barberos => ({ id: barberos.id_empleado, nombre: barberos.tercero.nombre }));
         console.log(arreglobarberos);
 
         res.render('../views/citas.hbs', { barberos: arreglobarberos, servicios: arregloservicios }); // 
@@ -37,37 +38,44 @@ const barberos = async (req, res) => {
             ok: false,
             msg: 'Error interno del servidor'
         })
-    }
+    } 
 }
 
 // Controlador para reservar una cita
 const register = async (req, res) => {
     try {
-        const { id_cliente, id_empleado, id_servicio, fecha_cita, estado, comentario } = req.body;
 
-        console.log(id_cliente, id_empleado, id_servicio, fecha_cita, estado, comentario);
+        const { id_cliente, nombre_cliente, id_empleado, id_servicio, fecha_cita, id_estado, comentario } = req.body;
+
+
+
+        console.log(id_cliente, id_empleado, id_servicio, fecha_cita, id_estado, comentario);
         // Verificar que todos los datos requeridos estén presentes
-        if (!id_cliente || !id_empleado || !id_servicio || !fecha_cita || !estado) {
+        if ( !id_empleado || !fecha_cita) {
             return res.status(400).json({ error: 'Faltan datos requeridos' });
         }
 
-        // Verificar que el cliente exista
-        const cliente = await Cliente.findByPk(id_cliente);
-        if (!cliente) {
-            return res.status(404).json({ error: 'Cliente no encontrado' });
+        if(!id_cliente && !nombre_cliente){
+            return res.status(400).json({ error: 'No se pueden crear citas sin nombre' });
         }
+
+        // Verificar que el cliente exista
+        // const cliente = await Cliente.findByPk(id_cliente);
+        // if (!cliente) {
+        //     return res.status(404).json({ error: 'Cliente no encontrado' });
+        // }
 
         // Verificar que el empleado exista
-        const empleado = await Employee.findByPk(id_empleado);
-        if (!empleado) {
-            return res.status(404).json({ error: 'Empleado no encontrado' });
-        }
+        // const empleado = await Employee.findByPk(id_empleado);
+        // if (!empleado) {
+        //     return res.status(404).json({ error: 'Empleado no encontrado' });
+        // }
 
         // Verificar que el servicio exista
-        const servicio = await Servicio.findByPk(id_servicio);
-        if (!servicio) {
-            return res.status(404).json({ error: 'Servicio no encontrado' });
-        }
+        // const servicio = await Servicio.findByPk(id_servicio);
+        // if (!servicio) {
+        //     return res.status(404).json({ error: 'Servicio no encontrado' });
+        // }
 
         //Verificar que la fecha no sea menor que la actual
         if (fecha_cita < Date.now()) {
@@ -80,12 +88,14 @@ const register = async (req, res) => {
             id_empleado,
             id_servicio,
             fecha_cita,
-            estado,
-            comentario
+            id_estado,
+            comentario,
+            nombre_cliente
         });
-
+            
         // Devolver la cita creada
-        res.status(201).json(nuevaCita);
+        // res.render('../views/citas.hbs', { barberos: arreglobarberos, servicios: arregloservicios, citareservada: true });
+        // res.status(201).json(nuevaCita);
     } catch (error) {
         console.error('Error al reservar cita:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
