@@ -4,6 +4,7 @@ import { Servicio } from './servicio.model.js';
 import { Cliente } from './cliente.model.js';
 import { Employee } from './empleado.model.js';
 import { Estado } from './estado.model.js';
+import { Direccion } from './direccion/direccion.model.js';
 
 export const Cita = sequelize.define('citas', {
     id_cita: {
@@ -54,6 +55,11 @@ export const Cita = sequelize.define('citas', {
     },
     comentario: {
         type: DataTypes.TEXT
+    },
+    id_direccion: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+       
     }
 });
 
@@ -61,9 +67,11 @@ export const Cita = sequelize.define('citas', {
 Cita.belongsTo( Cliente, { foreignKey: 'id_cliente' },
                 Employee, { foreignKey: 'id_empleado' },
                 Servicio, { foreignKey: 'id_servicio' },
-                Estado, { foreignKey: 'id_estado' });
+                Estado, { foreignKey: 'id_estado' },
+                Direccion, { foreignKey: 'id_direccion'});
 
 Cliente.hasMany(Cita, { foreignKey: 'id_cliente' });
 Employee.hasMany(Cita, { foreignKey: 'id_empleado' });
 Servicio.hasMany(Cita, { foreignKey: 'id_servicio' });
 Estado.hasMany(Cita, { foreignKey: 'id_estado' });
+Direccion.hasMany(Cita, { foreignKey: 'id_direccion' });

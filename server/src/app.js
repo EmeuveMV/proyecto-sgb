@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3001
 
 try {
     await sequelize.authenticate();
+    
     // await sequelize.sync({ alter: true });
     console.log('Db Connected');
 } catch (error) {

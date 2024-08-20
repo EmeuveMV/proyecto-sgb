@@ -41,7 +41,7 @@ const registrar = async (req, res) => {
         nombre_cliente,
         id_metodo_pago,
         total,
-        detalles // para el  JSON
+        detalles // para el JSON
     } = req.body;
 
     try {
